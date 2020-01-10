@@ -23,7 +23,6 @@ public class Die {
 
     public void firstRoll(){
         int[] rolls = new int[5];
-        // CREATE AN ARRAY OF ALL ROLLS
         this.numRolls++;
         Random rand = new Random();
         for (int i = 0; i < 5; i++){
@@ -55,7 +54,9 @@ public class Die {
                 "3 of a Kind, Straights, Full House, and Yahtzee.");
         String category = sc.next();
         switch (category){
-            case "Ones":
+            case "3 of a Kind":
+                threeKind(rolls);
+                break;
 
         }
     }
@@ -63,7 +64,7 @@ public class Die {
     public int threeKind(int[] rolls){
         int score = 0;
         for (int i = 0; i < rolls.length; i++){
-            
+            //Stuff
         }
     }
 }

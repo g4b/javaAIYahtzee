@@ -5,7 +5,7 @@ public class Computer extends Player {
     }
 
     public void computerRoll(){
-        super.
+        // do something
     }
 
 }
