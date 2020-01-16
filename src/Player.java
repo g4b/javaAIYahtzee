@@ -20,11 +20,13 @@ public class Player {
     }
 
     public void playerRoll(){
-        System.out.println("Player's turn!");
+        System.out.println(this.name + "'s turn!");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Press 'return' to roll die");
-        if (scanner.nextLine().equals(" ")){
+        if (scanner.nextLine().equals("")){
+            System.out.print(this.name + " is rolling...");
             this.playerDie.firstRoll();
+            this.score += this.playerDie.getDieScore();
         } else {
             System.out.println("error");
         }

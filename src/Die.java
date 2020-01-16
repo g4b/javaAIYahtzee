@@ -3,18 +3,23 @@ import java.util.Random;
 
 public class Die {
 
+    public int dieScore;
     public int value;
     public String currentFace;
     public int numRolls;
 
     public Die(){
-        this.value = 1;
+        this.dieScore = 0;
         this.currentFace = "1";
         this.numRolls = 0;
     }
 
     public int getValue(){
         return value;
+    }
+
+    public int getDieScore(){
+        return dieScore;
     }
 
     public String getCurrentFace(){
@@ -31,13 +36,27 @@ public class Die {
             this.value = newFace;
             rolls[i] = value;
             //output to screen
-            System.out.print(currentFace);
         }
+        String stringRolls = "[";
+        for (int i = 0; i < 5; i++){
+            stringRolls += rolls[i];
+            if (i == 4){
+                stringRolls += "]";
+            } else {
+                stringRolls += ", ";
+            }
+        }
+        System.out.println("Current roll: " + stringRolls + " Rolls remaining: " + numRolls);
         Scanner sc = new Scanner(System.in);
-        System.out.println("Roll again or score?");
+        System.out.println(" Roll again or score?");
         switch(sc.next()) {
             case "Roll again":
-                //roll again
+                if (numRolls <= 2){
+                    this.firstRoll();
+                } else {
+                    System.out.print("You are out of rolls. Your roll will now be scored automatically.");
+                    this.calcScore(rolls);
+                }
                 break;
             case "score":
                 this.calcScore(rolls);
@@ -48,23 +67,37 @@ public class Die {
         }
     }
 
-    public int calcScore(int[] rolls){
+    public void calcScore(int[] rolls){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Please type the category in which you wish to score your rolls. Categories are:" +
-                "3 of a Kind, Straights, Full House, and Yahtzee.");
-        String category = sc.next();
+        System.out.println("Please type, as a number, the category in which you wish to score your rolls. Categories are: " +
+                "3 of a Kind (0), Straights (1), Full House (2), and Yahtzee (3).");
+        int category = Integer.parseInt(sc.next());
         switch (category){
-            case "3 of a Kind":
-                threeKind(rolls);
-                break;
+            case 0:
+                this.dieScore += threeKind(rolls);
+            //case 1:
+                //return straights(rolls);
+            //case 3:
+
 
         }
+        //return 0;
     }
 
     public int threeKind(int[] rolls){
         int score = 0;
-        for (int i = 0; i < rolls.length; i++){
+        for (int i = 0; i < rolls.length - 2; i++){
             //Stuff
+            if ((rolls[i] == rolls[i + 1])&&(rolls[i+1] == rolls[i+2])){
+                score += (rolls[i]*3);
+                break;
+            }
         }
+        return score;
     }
+
+    /*public int straights(int[] rolls){
+        int score = 0;
+
+    }*/
 }
