@@ -75,8 +75,8 @@ public class Die {
         switch (category){
             case 0:
                 this.dieScore += threeKind(rolls);
-            //case 1:
-                //return straights(rolls);
+            case 1:
+                this.dieScore += straights(rolls);
             //case 3:
 
 
@@ -85,19 +85,28 @@ public class Die {
     }
 
     public int threeKind(int[] rolls){
-        int score = 0;
         for (int i = 0; i < rolls.length - 2; i++){
             //Stuff
             if ((rolls[i] == rolls[i + 1])&&(rolls[i+1] == rolls[i+2])){
-                score += (rolls[i]*3);
-                break;
+                return 20;
             }
         }
-        return score;
+        return 0;
     }
 
-    /*public int straights(int[] rolls){
-        int score = 0;
-
-    }*/
+    public int straights(int[] rolls){
+        int consecutiveCount = 0;
+        for (int i = 0; i < rolls.length - 1; i++){
+            if (rolls[i + 1] == rolls[i] + 1){
+                consecutiveCount++;
+            }
+        }
+        if (consecutiveCount == 3){
+            return 30;
+        } else if (consecutiveCount == 4){
+            return 40;
+        } else {
+            return 0;
+        }
+    }
 }
