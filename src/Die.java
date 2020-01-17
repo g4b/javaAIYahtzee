@@ -81,7 +81,6 @@ public class Die {
 
 
         }
-        //return 0;
     }
 
     public int threeKind(int[] rolls){
@@ -108,5 +107,16 @@ public class Die {
         } else {
             return 0;
         }
+    }
+
+    public int yahtzee(int[] rolls){
+        if (threeKind(rolls) == 20){
+            for (int i = 0; i < rolls.length - 2; i++){
+                if (rolls[i] == rolls[i + 1]){
+                    return 50;
+                }
+            }
+        }
+        return 0;
     }
 }
