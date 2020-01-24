@@ -5,10 +5,9 @@ public class Computer extends Player {
     }
 
     public void computerRoll(boolean signal){
-        // do something
         if (signal){
             System.out.println(this.name + "'s turn! " + this.name + " is rolling...");
-            this.playerDie.firstRoll();
+            this.playerDie.calcScore(this.playerDie.getNumRolls(), false);
         } else {
             System.out.println(this.name + " died. Please reload and try again.");
         }
