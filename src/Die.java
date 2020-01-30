@@ -1,60 +1,43 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
 
 public class Die {
 
     public int dieScore;
-    //public int value;
-    //public String currentFace;
     public int rollsRemaining;
+    public int[] rolls;
 
     public Die(){
         this.dieScore = 0;
-        //this.currentFace = "1";
-        this.rollsRemaining = 0;
+        this.rollsRemaining = 2;
     }
-
-    /*public int getValue(){
-        return value;
-    }*/
 
     public int getDieScore(){
-        return dieScore;
+        return this.dieScore;
     }
-
-    /*public String getCurrentFace(){
-        return currentFace;
-    }*/
 
     public int getRollsRemaining(){
-        return rollsRemaining;
+        return this.rollsRemaining;
     }
 
-    public int[] getNumRolls() {
+    public void setNumRolls() {
         int[] rolls = new int[5];
         this.rollsRemaining--;
         Random rand = new Random();
         for (int i = 0; i < 5; i++) {
             int newFace = rand.nextInt(6) + 1;
-            //this.currentFace = String.valueOf(newFace);
-            //this.value = newFace;
             rolls[i] = newFace;
-            //output to screen
         }
-        return rolls;
+        this.rolls = rolls;
+    }
+
+    public int[] getNumRolls() {
+        return this.rolls;
     }
 
     public String getStringRolls(int[] rolls){
-        String stringRolls = "[";
-        for (int i = 0; i < 5; i++){
-            stringRolls += rolls[i];
-            if (i == 4){
-                stringRolls += "]";
-            } else {
-                stringRolls += ", ";
-            }
-        }
-        return stringRolls;
+        return Arrays.toString(rolls);
     }
 
     public void calcScore(int[] rolls, boolean playerUsing){
@@ -80,14 +63,12 @@ public class Die {
             }
         } else {
             this.dieScore += threeKind(rolls);
-            System.out.println("Score: " + this.getDieScore());
         }
     }
 
     public int threeKind(int[] rolls){
         int matchPairCount = 0;
         for (int i = 0; i < rolls.length - 2; i++){
-            //Stuff
             for (int j = 1; j < rolls.length - 1; j++){
                 if (rolls[i] == rolls[j] || rolls[i] == rolls[j + 1]){
                     matchPairCount++;
@@ -107,10 +88,8 @@ public class Die {
                 consecutiveCount++;
             }
         }
-        if (consecutiveCount == 3){
-            return 30;
-        } else if (consecutiveCount == 4){
-            return 40;
+        if (consecutiveCount >= 3){
+            return 10 * consecutiveCount;
         } else {
             return 0;
         }
@@ -127,10 +106,10 @@ public class Die {
         return 0;
     }
 
-    // Bubble sort -- pulled this from Stack Overflow + adapted from my earlier sort visualization assignment in Github
+    // Bubble sort -- adapted from my earlier sort visualization assignment in Github
     public int[] sorted(int[] rolls){
         for (int i = 0; i < rolls.length - 1; i++){
-            for (int j = 1; j < rolls.length - i - 1; j++){
+            for (int j = 0; j < rolls.length - i - 1; j++){
                 if (rolls[j] > rolls[j + 1]){
                     int placeholder = rolls[j];
                     rolls[j] = rolls[j + 1];
@@ -138,6 +117,36 @@ public class Die {
                 }
             }
         }
+        System.out.println(Arrays.toString(rolls));
         return rolls;
+    }
+
+    public void initiateRoll(){
+        this.setNumRolls();
+        int[] numRolls = this.getNumRolls();
+        String stringRolls = this.getStringRolls(numRolls);
+        System.out.println("Current roll: " + stringRolls + " Rolls remaining: " + this.rollsRemaining);
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Roll again (0) or score (1)?");
+        switch(Integer.parseInt(sc.next())) {
+            case 0:
+                if (this.rollsRemaining == 1) {
+                    int[] newNumRolls = this.getNumRolls();
+                    String newRolls = this.getStringRolls(newNumRolls);
+                    System.out.println("New roll: " + newRolls);
+                    this.calcScore(this.getNumRolls(), true);
+                } else {
+                    System.out.print("You are out of rolls. Your roll will now be scored automatically.");
+                    this.calcScore(numRolls, true);
+                }
+                this.rollsRemaining = 2;
+                break;
+            case 1:
+                this.calcScore(numRolls, true);
+                break;
+            default:
+                System.out.println("error");
+                break;
+        }
     }
 }

@@ -11,11 +11,11 @@ public class Runner {
         System.out.println(player.name + " is playing against the amazing Yahtzee AI, " + computer.name +
                 ". Let the game begin...");
         // CAREFUL WITH INFINITE LOOPS BELOW
-        while(player.score <= 25 && computer.score <=25){
+        while(player.score <= 60 && computer.score <= 60){
             player.playerRoll();
             computer.computerRoll(true);
         }
-        if (player.score == 25) {
+        if (player.score >= 60) {
             System.out.println(player.name + " wins!");
         } else {
             System.out.println(computer.name + " wins!");
