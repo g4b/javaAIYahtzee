@@ -1,6 +1,6 @@
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.Arrays;
 
 public class Die {
 
@@ -47,16 +47,16 @@ public class Die {
                 "3 of a Kind (0), Straights (1), Full House (2), and Yahtzee (3). Note: all computer rolls will be scored " +
                     "in the 3 of a Kind Category.");
             int category = Integer.parseInt(sc.next());
-            int[] rollsSorted = this.sorted(rolls);
+            Arrays.sort(rolls);
             switch (category) {
                 case 0:
-                    this.dieScore += threeKind(rollsSorted);
+                    this.dieScore += threeKind(rolls);
                     break;
                 case 1:
-                    this.dieScore += straights(rollsSorted);
+                    this.dieScore += straights(rolls);
                     break;
                 case 3:
-                    this.dieScore += yahtzee(rollsSorted);
+                    this.dieScore += yahtzee(rolls);
                     break;
                 default:
                     this.dieScore += 0;
@@ -106,21 +106,6 @@ public class Die {
         return 0;
     }
 
-    // Bubble sort -- adapted from my earlier sort visualization assignment in Github
-    public int[] sorted(int[] rolls){
-        for (int i = 0; i < rolls.length - 1; i++){
-            for (int j = 0; j < rolls.length - i - 1; j++){
-                if (rolls[j] > rolls[j + 1]){
-                    int placeholder = rolls[j];
-                    rolls[j] = rolls[j + 1];
-                    rolls[j + 1] = placeholder;
-                }
-            }
-        }
-        System.out.println(Arrays.toString(rolls));
-        return rolls;
-    }
-
     public void initiateRoll(){
         this.setNumRolls();
         int[] numRolls = this.getNumRolls();
@@ -131,6 +116,7 @@ public class Die {
         switch(Integer.parseInt(sc.next())) {
             case 0:
                 if (this.rollsRemaining == 1) {
+                    this.setNumRolls();
                     int[] newNumRolls = this.getNumRolls();
                     String newRolls = this.getStringRolls(newNumRolls);
                     System.out.println("New roll: " + newRolls);
